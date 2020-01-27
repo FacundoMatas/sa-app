@@ -3,6 +3,7 @@ import pickle
 from preprocess import label_feats_from_corpus
 from preprocess import split_label_feats
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 
 # load model, use experiment3
@@ -10,6 +11,7 @@ model = pickle.load(open('model.sav', 'rb'))
 
 # app
 app = Flask(__name__)
+CORS(app)
 
 
 # routes
