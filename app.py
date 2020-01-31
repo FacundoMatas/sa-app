@@ -33,9 +33,17 @@ def predict():
         if name == 'Regresion logistica':
             for i, (feats, label) in enumerate(example_set):
                 result = classifier.classify(feats)
+                for pdist in classifier.prob_classify_many(feats):
+                    if result == 0:
+                        probability = pdist.prob(0)
+                    else:
+                        probability = pdist.prob(1)
+
+
 
     # send back to browser
-    output = {'results': int(result)}
+    output = {'results': int(result),
+              'probablity': probability}
 
     # return data
     return jsonify(results=output)
