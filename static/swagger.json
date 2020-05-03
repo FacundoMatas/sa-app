@@ -1,0 +1,85 @@
+{
+   "openapi":"3.0.0",
+   "info":{
+      "description":"API con un único endpoint que aplica el modelo detallado en el proyecto.",
+      "version":"1.0.0",
+      "title":"Facundo Alfredo Homez Matas - API Tesis",
+      "contact":{
+         "email":"facundohmatas@gmail.com"
+      }
+   },
+   "servers": [
+      {
+         "url": "/"
+      },
+      {
+         "url": "https://thesis-backend-sa.herokuapp.com/"
+      }
+   ],
+   "tags": [
+      {
+         "name": "Minería de opinión en Twitter aplicado al ambiente político de Argentina - API",
+         "description" : "API para ejemplificar el trabajo realizado en el proyecto de grado"
+      }
+   ],
+   "paths": {
+      "/": {
+         "post": {
+            "tags": [ "Clasificador" ],
+            "summary": "Clasificación de polaridad de un tweet",
+            "requestBody": {
+               "description": "<b>Esquema que recibe el endpoint. La propiedad 'sentiment' no se utiliza, por lo que en la request puede llevar cualquier valor.</b> \n\nEjemplos de aplicación: \n\n<ul><li><b>POS:</b> No hay que tenerle miedo al debate ni guiarse por viejos dogmas, las Fuerzas Armadas pueden colaborar conforme a los tiempos que corren sin violentar el ordenamiento jurídico. Las reformas son necesarias.</li><li><b>NEG</b>: Emocionante solidaridad de clase. Desde Cresta Roja los trabajadores repudiando la represión. </li></ul> &nbsp;",
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/request"
+                     }
+                  }
+               }
+            },
+            produces: [ "application/json" ],
+            responses: {
+               "200": {
+                  description: "OK",
+                  schema: {
+                     "$ref": "#/components/schemas/response"
+                  }
+               }
+            }
+         }
+      }
+   },
+   "components":{
+      "schemas":{
+         "request":{
+            "properties":{
+               "text":{
+                  "type":"string",
+                  "example": "No hay que tenerle miedo al debate ni guiarse por viejos dogmas, las Fuerzas Armadas pueden colaborar conforme a los tiempos que corren sin violentar el ordenamiento jurídico. Las reformas son necesarias"
+               },
+               "sentiment":{
+                  "type":"integer",
+                  "example": 9
+               }
+            }
+         },
+         "response":{
+            "type":"object",
+            "properties":{
+               "results":{
+                  "type":"object",
+                  "properties":{
+                     "probability":{
+                        "type":"float"
+                     },
+                     "results":{
+                        "type":"string"
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}

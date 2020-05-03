@@ -4,7 +4,7 @@ from preprocess import label_feats_from_corpus
 from preprocess import split_label_feats
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
+from flask_swagger_ui import get_swaggerui_blueprint
 
 # load model, use experiment3
 model = pickle.load(open('model.sav', 'rb'))
@@ -12,6 +12,19 @@ model = pickle.load(open('model.sav', 'rb'))
 # app
 app = Flask(__name__)
 CORS(app)
+
+### swagger specific ###
+SWAGGER_URL = ''
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Backend SA APP"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+### end swagger specific ###
 
 
 # routes

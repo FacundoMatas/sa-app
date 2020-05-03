@@ -40,6 +40,7 @@ fastcache==1.0.2
 filelock==2.0.13
 Flask==0.12.2
 Flask-Cors==3.0.8
+flask-swagger-ui==3.20.9
 ftfy==4.4.3
 gast==0.2.0
 gevent==1.2.2
